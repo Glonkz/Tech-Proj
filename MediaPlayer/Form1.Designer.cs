@@ -105,18 +105,19 @@
             // 
             this.videoView1.BackColor = System.Drawing.Color.Black;
             this.videoView1.Location = new System.Drawing.Point(0, 22);
-            this.videoView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.videoView1.Margin = new System.Windows.Forms.Padding(2);
             this.videoView1.MediaPlayer = null;
             this.videoView1.Name = "videoView1";
             this.videoView1.Size = new System.Drawing.Size(818, 466);
             this.videoView1.TabIndex = 2;
             this.videoView1.Text = "videoView1";
+            this.videoView1.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // trackBar1
             // 
             this.trackBar1.BackColor = System.Drawing.SystemColors.Control;
             this.trackBar1.Location = new System.Drawing.Point(104, 492);
-            this.trackBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(2);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(583, 45);
             this.trackBar1.TabIndex = 4;
@@ -126,50 +127,54 @@
             // 
             this.button1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button1.Location = new System.Drawing.Point(0, 492);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(37, 37);
             this.button1.TabIndex = 5;
             this.button1.Text = "Play";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button2.Location = new System.Drawing.Point(41, 492);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(48, 37);
             this.button2.TabIndex = 6;
             this.button2.Text = "Pause";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.btnPause_Click);
             // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button3.Location = new System.Drawing.Point(691, 492);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(49, 37);
             this.button3.TabIndex = 7;
             this.button3.Text = "Mute";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.btnMute_Click);
             // 
             // trackBar2
             // 
             this.trackBar2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.trackBar2.Location = new System.Drawing.Point(744, 492);
-            this.trackBar2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trackBar2.Margin = new System.Windows.Forms.Padding(2);
             this.trackBar2.Maximum = 100;
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(63, 45);
             this.trackBar2.TabIndex = 8;
+            this.trackBar2.MouseCaptureChanged += new System.EventHandler(this.trackBarVolume_Scroll);
             // 
             // trackBar3
             // 
             this.trackBar3.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.trackBar3.Location = new System.Drawing.Point(75, 578);
-            this.trackBar3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trackBar3.Margin = new System.Windows.Forms.Padding(2);
             this.trackBar3.Maximum = 100;
             this.trackBar3.Name = "trackBar3";
             this.trackBar3.Size = new System.Drawing.Size(63, 45);
@@ -189,7 +194,7 @@
             // 
             this.trackBar4.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.trackBar4.Location = new System.Drawing.Point(75, 665);
-            this.trackBar4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trackBar4.Margin = new System.Windows.Forms.Padding(2);
             this.trackBar4.Maximum = 100;
             this.trackBar4.Name = "trackBar4";
             this.trackBar4.Size = new System.Drawing.Size(63, 45);
@@ -209,7 +214,7 @@
             // 
             this.button4.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button4.Location = new System.Drawing.Point(154, 588);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(44, 37);
             this.button4.TabIndex = 13;
@@ -220,7 +225,7 @@
             // 
             this.button5.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button5.Location = new System.Drawing.Point(154, 674);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(44, 37);
             this.button5.TabIndex = 14;
@@ -245,7 +250,7 @@
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.videoView1);
             this.Controls.Add(this.menuStrip2);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.menuStrip2.ResumeLayout(false);

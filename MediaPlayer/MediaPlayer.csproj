@@ -48,6 +48,15 @@
     <LangVersion>7.3</LangVersion>
     <PreferNativeArm64>true</PreferNativeArm64>
   </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+	    <DebugSymbols>true</DebugSymbols>
+	    <OutputPath>bin\x64\Debug\</OutputPath>
+	    <DefineConstants>DEBUG;TRACE</DefineConstants>
+	    <DebugType>full</DebugType>
+	    <PlatformTarget>x64</PlatformTarget>
+	    <ErrorReport>prompt</ErrorReport>
+	    <Prefer32Bit>false</Prefer32Bit>
+    </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibVLCSharp, Version=3.9.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LibVLCSharp.3.9.6\lib\net471\LibVLCSharp.dll</HintPath>
