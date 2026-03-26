@@ -14,10 +14,12 @@ using LibVLCSharp.Shared;
 
 namespace MediaPlayer
 {
-    public partial class Form1 : Form
+
+	public partial class Form1 : Form
     {
-        private LibVLC _libVLC;
-        private LibVLCSharp.Shared.MediaPlayer _mediaPlayer;
+		internal LibVLC _libVLC;
+		internal Media media;
+		internal LibVLCSharp.Shared.MediaPlayer _mediaPlayer;
 
         public Form1()
         {
@@ -28,48 +30,54 @@ namespace MediaPlayer
             _libVLC = new LibVLC();
             _mediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libVLC);
             videoView1.MediaPlayer = _mediaPlayer;
-
-
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Video Files|*.mp4;*.wmv;*.avi;*.mkv|All Files|*.*";
-                openFileDialog.Title = "Open Media File";
+		private async void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (OpenFileDialog openFileDialog = new OpenFileDialog())
+			{
+				openFileDialog.Filter = "Video Files|*.mp4;*.wmv;*.avi;*.mkv|All Files|*.*";
+				openFileDialog.Title = "Open Media File";
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    // Stops currently playing video before loading a new one.
-                    if (_mediaPlayer.IsPlaying)
-                    {
-                        _mediaPlayer.Stop();
-                    }
+				if (openFileDialog.ShowDialog() == DialogResult.OK)
+				{
+					string newPath = openFileDialog.FileName;
 
-                    // Creates media from the local file path.
-                    using (var media = new Media(_libVLC, openFileDialog.FileName, FromType.FromPath))
-                    {
-                        _mediaPlayer.Play(media);
-                    }
-                }
-            }
-        }
+					await Task.Run(() =>
+					{
+						if (_mediaPlayer != null && _mediaPlayer.IsPlaying)
+						{
+							_mediaPlayer.Stop();
+						}
 
+						if (media != null)
+						{
+							media.Dispose();
+							media = null;
+						}
+					});
 
-        // Method for keeping resources clean when the form is closed.
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            _mediaPlayer?.Dispose();
-            _libVLC?.Dispose();
-            base.OnFormClosed(e);
-        }
+					media = new Media(_libVLC, newPath, FromType.FromPath);
+					_mediaPlayer.Media = media;
+					_mediaPlayer.Play();
+				}
+			}
+			//doesnt work but im keeping this here just in case
+			//_mediaPlayer.SetAudioOutput(_mediaPlayer.AudioOutputDeviceEnum[0].DeviceIdentifier);
+			//_mediaPlayer.SetAudioTrack(0);
+			//_mediaPlayer.Volume = 100;
+		}
+
 
         // Method for handling button clicks to play media.
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            if (_mediaPlayer != null && !_mediaPlayer.IsPlaying)
+			if (_mediaPlayer != null && !_mediaPlayer.IsPlaying)
             {
+                if (!_mediaPlayer.WillPlay)
+                {
+                    _mediaPlayer.Play(_mediaPlayer.Media);
+				}
                 _mediaPlayer.Play();
             }
         }
@@ -80,8 +88,8 @@ namespace MediaPlayer
             if (_mediaPlayer != null && _mediaPlayer.IsPlaying)
             {
                 _mediaPlayer.Pause();
-            }
-        }
+			}
+		}
 
         // Method for handling button clicks to stop media.
         private void btnMute_Click(object sender, EventArgs e)
@@ -101,5 +109,19 @@ namespace MediaPlayer
                 _mediaPlayer.Volume = volumeSlider.Value;
             }
         }
-    }
+
+		// Method for keeping resources clean when the form is closed.
+		protected override void OnFormClosed(FormClosedEventArgs e)
+		{
+			_mediaPlayer?.Dispose();
+			_libVLC?.Dispose();
+			media.Dispose();
+			base.OnFormClosed(e);
+		}
+
+		private void trackBar4_Scroll(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
