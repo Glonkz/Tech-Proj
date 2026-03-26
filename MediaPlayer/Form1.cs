@@ -115,7 +115,10 @@ namespace MediaPlayer
 		{
 			_mediaPlayer?.Dispose();
 			_libVLC?.Dispose();
-			media.Dispose();
+			if (media != null)
+			{
+				media.Dispose();
+			}
 			base.OnFormClosed(e);
 		}
 
