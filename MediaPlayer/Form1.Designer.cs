@@ -31,7 +31,6 @@
 			this.menuStrip2 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.videoView1 = new LibVLCSharp.WinForms.VideoView();
 			this.trackBar1 = new System.Windows.Forms.TrackBar();
 			this.button2 = new System.Windows.Forms.Button();
@@ -62,42 +61,35 @@
             this.fileToolStripMenuItem});
 			this.menuStrip2.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip2.Name = "menuStrip2";
-			this.menuStrip2.Size = new System.Drawing.Size(1713, 48);
+			this.menuStrip2.Size = new System.Drawing.Size(1713, 42);
 			this.menuStrip2.TabIndex = 1;
 			this.menuStrip2.Text = "menuStrip2";
 			// 
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.openToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(71, 44);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(71, 38);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(206, 44);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
 			this.openToolStripMenuItem.Text = "Open";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-			// 
-			// exitToolStripMenuItem
-			// 
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(206, 44);
-			this.exitToolStripMenuItem.Text = "Exit";
 			// 
 			// videoView1
 			// 
 			this.videoView1.AllowDrop = true;
 			this.videoView1.BackColor = System.Drawing.Color.Black;
 			this.videoView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.videoView1.Location = new System.Drawing.Point(0, 48);
+			this.videoView1.Location = new System.Drawing.Point(0, 42);
 			this.videoView1.Margin = new System.Windows.Forms.Padding(4);
 			this.videoView1.MediaPlayer = null;
 			this.videoView1.Name = "videoView1";
-			this.videoView1.Size = new System.Drawing.Size(1713, 716);
+			this.videoView1.Size = new System.Drawing.Size(1713, 722);
 			this.videoView1.TabIndex = 2;
 			this.videoView1.Text = "videoView1";
 			// 
@@ -287,7 +279,6 @@
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private LibVLCSharp.WinForms.VideoView videoView1;
 		private System.Windows.Forms.TrackBar trackBar1;
 		private System.Windows.Forms.Button button2;
