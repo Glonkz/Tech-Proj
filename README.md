@@ -1,15 +1,14 @@
-Dual Media Player
+## Dual Media Player
 A desktop media player application built using C# and the .NET Framework, utilizing the LibVLCSharp library for high-performance multimedia playback.
 
-Authors
-Jaspreet Bath
-
+#### Authors
+Jaspreet Bath /
 Justin Chik
 
-Description
+### Description
 This application is a Windows Forms-based media player designed to play a wide variety of video and audio files. It leverages the LibVLC engine to provide native support for modern codecs and hardware acceleration without requiring external codec packs.
 
-Features
+### Features
 Format Support: Plays major video and audio formats including MP4, MKV, AVI, WMV, MP3, and AAC.
 
 Playback Controls: Standard Play, Pause, and Mute functionality.
@@ -22,14 +21,13 @@ File Management: Built-in file browser to load media from local storage.
 
 Resource Management: Automated cleanup of unmanaged LibVLC resources upon application exit.
 
-Technical Requirements
-Framework: .NET Framework
-
+### Technical Requirements
+Framework: .NET Framework/
 Library: LibVLCSharp (v3.x or higher)
 
 Hardware Acceleration: Supports GPU decoding via DxVA2, D3D11VA, and NVDEC.
 
-Setup and Installation
+### Setup and Installation
 Open the project in Visual Studio.
 
 Restore NuGet packages to install LibVLCSharp.WinForms and VideoLAN.LibVLC.Windows.
