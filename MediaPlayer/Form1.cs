@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibVLCSharp.Shared;
+using LibVLCSharp.Shared.Structures;
 
 /**
  * Name: Dual Media Player
@@ -13,12 +15,10 @@ using LibVLCSharp.Shared;
 
 namespace MediaPlayer
 {
-
 	public partial class Form1 : Form
-    {
+	{
 		internal LibVLC _libVLC;
-		internal Media media;
-		internal LibVLCSharp.Shared.MediaPlayer _mediaPlayer;
+		internal LibVLCSharp.Shared.MediaPlayer _playerSystem;
 
 		// justin chik - dual player and track detection
 		internal LibVLCSharp.Shared.MediaPlayer _playerMic;
@@ -28,11 +28,10 @@ namespace MediaPlayer
 		private int _micTrackId = -1;
 		private bool _isDualTrack = false;
 
-        public Form1()
-        {
-            InitializeComponent();
-
-            Core.Initialize();
+		public Form1()
+		{
+			InitializeComponent();
+			Core.Initialize();
 
 			_libVLC = new LibVLC("--aout=directx", "--audio");
 
@@ -45,7 +44,7 @@ namespace MediaPlayer
 			_playerSystem.Playing += (s, e) => { if (_isDualTrack && !_playerMic.IsPlaying) _playerMic.Play(); };
 			_playerSystem.Paused += (s, e) => { if (_isDualTrack) _playerMic.Pause(); };
 			_playerSystem.Stopped += (s, e) => { if (_playerMic != null) _playerMic.Stop(); };
-        }
+		}
 
 		// justin chik - open file with immediate buffer clearing to prevent ghost audio
 		private async void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,8 +52,6 @@ namespace MediaPlayer
 			using (OpenFileDialog openFileDialog = new OpenFileDialog())
 			{
 				openFileDialog.Filter = "Video Files|*.mp4;*.wmv;*.avi;*.mkv|All Files|*.*";
-				openFileDialog.Title = "Open Media File";
-
 				if (openFileDialog.ShowDialog() == DialogResult.OK)
 				{
 					string newPath = openFileDialog.FileName;
@@ -86,16 +83,16 @@ namespace MediaPlayer
 					_micTrackId = -1;
 
 					foreach (var t in tracks)
-						{
+					{
 						if (t.Id == -1) continue;
 						if (count == 0) _sysTrackId = t.Id;
 						if (count == 1) _micTrackId = t.Id;
 						count++;
-						}
+					}
 
 					// justin chik - initialize background mic player if second track exists
 					if (count >= 2 && _micTrackId != -1)
-						{
+					{
 						_isDualTrack = true;
 						media2 = new Media(_libVLC, newPath, FromType.FromPath);
 						media2.AddOption(":no-video");
@@ -104,17 +101,12 @@ namespace MediaPlayer
 						_playerMic.Media = media2;
 						_playerMic.Play();
 						_playerMic.Volume = 100;
-						}
-					});
+					}
 
 					if (_sysTrackId != -1) CreateTrackControl("System Audio", _playerSystem);
 					if (_isDualTrack) CreateTrackControl("Microphone", _playerMic);
 				}
 			}
-			//doesnt work but im keeping this here just in case
-			//_mediaPlayer.SetAudioOutput(_mediaPlayer.AudioOutputDeviceEnum[0].DeviceIdentifier);
-			//_mediaPlayer.SetAudioTrack(0);
-			//_mediaPlayer.Volume = 100;
 		}
 
 		// justin chik - dynamic slider generation and independent volume control
@@ -135,11 +127,11 @@ namespace MediaPlayer
 
 		// justin chik - play button with forced dual reset for replay
 		private async void btnPlay_Click(object sender, EventArgs e)
-        {
+		{
 			if (_playerSystem == null) return;
 
 			if (_playerSystem.State == VLCState.Ended || _playerSystem.State == VLCState.Stopped)
-            {
+			{
 				_playerSystem.Stop();
 				_playerMic.Stop();
 
@@ -149,40 +141,34 @@ namespace MediaPlayer
 				if (_isDualTrack) _playerMic.Play();
 			}
 			else if (!_playerSystem.IsPlaying)
-                {
+			{
 				_playerSystem.Play();
 				if (_isDualTrack) _playerMic.Play();
-				}
-                _mediaPlayer.Play();
-            }
-        }
-
-        // Method for handling button clicks to pause media.
-        private void btnPause_Click(object sender, EventArgs e)
-        {
-			_playerSystem?.Pause();
-			if (_isDualTrack) _playerMic?.Pause();
 			}
 		}
 
+		private void btnPause_Click(object sender, EventArgs e)
+		{
+			_playerSystem?.Pause();
+			if (_isDualTrack) _playerMic?.Pause();
+		}
+
 		// justin chik - synchronized muting
-        private void btnMute_Click(object sender, EventArgs e)
-        {
+		private void btnMute_Click(object sender, EventArgs e)
+		{
 			bool muteState = !_playerSystem.Mute;
 			_playerSystem.Mute = muteState;
 			if (_isDualTrack) _playerMic.Mute = muteState;
-            }
-        }
+		}
 
 		// justin chik - master volume synchronization
-        private void trackBarVolume_Scroll(object sender, EventArgs e)
-        {
+		private void trackBarVolume_Scroll(object sender, EventArgs e)
+		{
 			TrackBar bar = (TrackBar)sender;
 			_playerSystem.Volume = bar.Value;
 			if (_isDualTrack) _playerMic.Volume = bar.Value;
-        }
+		}
 
-		// Method for keeping resources clean when the form is closed.
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
 			_playerSystem?.Dispose();
