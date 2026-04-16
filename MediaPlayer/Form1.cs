@@ -219,45 +219,65 @@ namespace MediaPlayer
 			}
 		}
 
+
 		// jaspreet bath - application exit handler
 		private void quitProgram(object sender, EventArgs e)
 		{
 			this.Close();
 		}
 
-		// jaspreet bath - update slider maximum based on media length
-		private void MediaPlayer_LengthChanged(object sender, MediaPlayerLengthChangedEventArgs e)
-		{
-			this.Invoke(new Action(() =>
-			{
-				if (e.Length > 0)
-				{
-					trackBar1.Minimum = 0;
-					trackBar1.Maximum = (int)e.Length;
-				}
-			}));
-		}
 
-		// jaspreet bath - update slider position based on current time
-		private void MediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
-		{
-			this.Invoke(new Action(() =>
-			{
-				if (trackBar1.Capture == false)
-				{
-					int value = (int)e.Time;
-					if (value > trackBar1.Maximum) value = trackBar1.Maximum;
-					if (value < 0) value = 0;
+        // jaspreet bath - update slider maximum based on media length
+        // Runs when the media finishes loading and determines the total duration.
+        private void MediaPlayer_LengthChanged(object sender, MediaPlayerLengthChangedEventArgs e)
+        {
+            // Uses 'Invoke' to jump from the background video
+			// thread to the UI thread.
+            this.Invoke(new Action(() =>
+            {
+                // Only update if the length is valid positive number.
+                if (e.Length > 0)
+                {
+                    // Set the start and end of the slider to match
+					// video millisecs
+                    trackBar1.Minimum = 0;
+                    trackBar1.Maximum = (int)e.Length;
+                }
+            }));
+        }
 
-					trackBar1.Value = value;
-				}
-			}));
-		}
+        // Runs continuously (async) while the video player tracks current progress.
+        private void MediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
+        {
+            // "invoke" is needed to safely update the trackbar
+			// from a separate thread.
+            this.Invoke(new Action(() =>
+            {
+                // When "capture" is false, user released the mouse button.
+				// When "capture" is true, user is dragging the slider and 
+				// we don't want to update it.
+                if (trackBar1.Capture == false)
+                {
+                    // Convert current video time to an integer for the slider.
+					// "Time" is from the current playback function in millisecs.
+                    int value = (int)e.Time;
 
-		// jaspreet bath - redundancy seeker logic
-		private void trackBar4_Scroll(object sender, EventArgs e)
-		{
-			trackBar_Scroll(sender, e);
-		}
-	}
+                    // Safety check: Keeps the trackbar within the trackbar bounds.
+                    if (value > trackBar1.Maximum) value = trackBar1.Maximum;
+                    if (value < 0) value = 0;
+
+                    // Move the slider handle to the current playback position.
+                    trackBar1.Value = value;
+                }
+            }));
+        }
+
+        // Triggered when the user manually moves the slider handle.
+        private void trackBar4_Scroll(object sender, EventArgs e)
+        {
+            // Calls a shared method to update the video's actual playback time 
+            // to match where the user moved the slider.
+            trackBar_Scroll(sender, e);
+        }
+    }
 }
