@@ -30,6 +30,10 @@ namespace MediaPlayer
             _libVLC = new LibVLC();
             _mediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libVLC);
             videoView1.MediaPlayer = _mediaPlayer;
+
+			// Subscriber to the events of media player
+            _mediaPlayer.LengthChanged += MediaPlayer_LengthChanged;
+            _mediaPlayer.TimeChanged += MediaPlayer_TimeChanged;
         }
 
 		private async void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -113,18 +117,64 @@ namespace MediaPlayer
 		// Method for keeping resources clean when the form is closed.
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
-			_mediaPlayer?.Dispose();
-			_libVLC?.Dispose();
-			if (media != null)
-			{
-				media.Dispose();
-			}
-			base.OnFormClosed(e);
-		}
+            _mediaPlayer.LengthChanged -= MediaPlayer_LengthChanged;
+            _mediaPlayer.TimeChanged -= MediaPlayer_TimeChanged;
+
+            _mediaPlayer?.Dispose();
+            _libVLC?.Dispose();
+            media?.Dispose();
+            base.OnFormClosed(e);
+        }
+
 
 		private void trackBar4_Scroll(object sender, EventArgs e)
 		{
+            if (_mediaPlayer != null)
+            {
+                // Set the video time to the trackbar value.
+                _mediaPlayer.Time = trackBar1.Value;
+            }
+        }
 
-		}
-	}
+
+		private void quitProgram(object sender, EventArgs e)
+		{
+			this.Close();
+        }
+
+
+        private void MediaPlayer_LengthChanged(object sender, MediaPlayerLengthChangedEventArgs e)
+        {
+
+            this.Invoke(new Action(() =>
+            {
+                // Only update if the length is a valid positive number
+                if (e.Length > 0)
+                {
+                    trackBar1.Minimum = 0;
+                    trackBar1.Maximum = (int)e.Length;
+                }
+            }));
+        }
+
+        private void MediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
+        {
+            
+            Console.WriteLine($"Current Video Time: {e.Time} ms");
+
+            this.Invoke(new Action(() =>
+            {
+                if (trackBar1.Capture == false)
+                {
+                    // Clamp value to ensure it doesn't crash if VLC reports 
+                    // a time slightly higher than the length
+                    int value = (int)e.Time;
+                    if (value > trackBar1.Maximum) value = trackBar1.Maximum;
+                    if (value < 0) value = 0;
+
+                    trackBar1.Value = value;
+                }
+            }));
+        }
+    }
 }
