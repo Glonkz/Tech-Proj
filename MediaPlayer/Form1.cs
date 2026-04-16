@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibVLCSharp.Shared;
@@ -20,6 +19,7 @@ namespace MediaPlayer
 		internal LibVLC _libVLC;
 		internal Media media;
 		internal LibVLCSharp.Shared.MediaPlayer _mediaPlayer;
+
 
         public Form1()
         {
