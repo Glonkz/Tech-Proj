@@ -2,7 +2,7 @@
 A desktop media player application built using C# and the .NET Framework, utilizing the LibVLCSharp library for high-performance multimedia playback.
 
 #### Authors
-Jaspreet Bath/
+Jaspreet Bath /
 Justin Chik
 
 ### Description
