@@ -5,6 +5,15 @@ using System.Windows.Forms;
 using LibVLCSharp.Shared;
 using LibVLCSharp.Shared.Structures;
 
+
+/**
+ * Name: Dual Media Player
+ * Group: Jaspreet Bath, Justin Chik
+ * 
+ * Description: This application is a media player that uses
+ * the LibVLCSharp library and play media files.
+ */
+
 namespace MediaPlayer
 {
 	public partial class Form1 : Form
