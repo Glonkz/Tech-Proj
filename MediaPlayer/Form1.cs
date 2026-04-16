@@ -12,6 +12,13 @@ using LibVLCSharp.Shared.Structures;
  * 
  * Description: This application is a media player that uses
  * the LibVLCSharp library and play media files.
+ * 
+ * Resources:
+ * https://docs.videolan.me/libvlcsharp/api/LibVLCSharp.Shared.MediaInput.html
+ * https://code.videolan.org/mfkl/libvlcsharp-samples/-/blob/master/RecordHLS/Program.cs
+ * 
+ * Gemini Help in the function to grabs trackbar events and updating
+ * the trackbar length.
  */
 
 namespace MediaPlayer
