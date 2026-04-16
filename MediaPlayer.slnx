@@ -5,6 +5,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path="readMe.md.txt" />
+  </Folder>
   <Project Path="MediaPlayer.Tests/MediaPlayer.Tests.csproj" Id="8dc28d9f-7c8d-4c95-a782-adc20bf009ed" />
   <Project Path="MediaPlayer/MediaPlayer.csproj" Id="2efb7e45-c2a6-422c-a4ea-b39b09d1e03c">
     <Platform Solution="*|ARM64" Project="ARM64" />
