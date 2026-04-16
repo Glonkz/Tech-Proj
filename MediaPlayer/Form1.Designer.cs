@@ -54,7 +54,7 @@
             this.fileToolStripMenuItem});
 			this.menuStrip2.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip2.Name = "menuStrip2";
-			this.menuStrip2.Size = new System.Drawing.Size(1713, 48);
+			this.menuStrip2.Size = new System.Drawing.Size(1713, 40);
 			this.menuStrip2.TabIndex = 1;
 			this.menuStrip2.Text = "menuStrip2";
 			// 
@@ -63,7 +63,7 @@
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(71, 40);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(71, 36);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
 			// openToolStripMenuItem
@@ -78,11 +78,11 @@
 			this.videoView1.AllowDrop = true;
 			this.videoView1.BackColor = System.Drawing.Color.Black;
 			this.videoView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.videoView1.Location = new System.Drawing.Point(0, 48);
+			this.videoView1.Location = new System.Drawing.Point(0, 40);
 			this.videoView1.Margin = new System.Windows.Forms.Padding(4);
 			this.videoView1.MediaPlayer = null;
 			this.videoView1.Name = "videoView1";
-			this.videoView1.Size = new System.Drawing.Size(1713, 715);
+			this.videoView1.Size = new System.Drawing.Size(1713, 723);
 			this.videoView1.TabIndex = 2;
 			this.videoView1.Text = "videoView1";
 			// 
@@ -98,6 +98,7 @@
 			this.trackBar1.Size = new System.Drawing.Size(1249, 90);
 			this.trackBar1.TabIndex = 4;
 			this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.trackBar1.Scroll += new System.EventHandler(this.trackBar_Scroll);
 			// 
 			// button2
 			// 
